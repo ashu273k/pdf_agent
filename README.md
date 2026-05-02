@@ -2,12 +2,11 @@
 
 A production-grade AI agent that answers questions strictly from an uploaded PDF — with page citations and clean refusals for out-of-scope queries.
 
-Built for the STAIR x Scaler School of Technology assessment (Task 3).
 
 ## Architecture
 
 ```
-User → Streamlit UI → Agent Core → Gemini 1.5 Flash
+User → Streamlit UI → Agent Core → Gemini 2.5 Flash
                     ↓
               PDF Extractor (tools/)
               Citation Builder (tools/)
