@@ -53,7 +53,12 @@ st.markdown("""
 
 # ── Session state ─────────────────────────────────────────────────────────────
 if "agent" not in st.session_state:
-    api_key = os.getenv("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY", "")
+    api_key = os.getenv("GEMINI_API_KEY", "")
+    if not api_key:
+        try:
+            api_key = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            api_key = ""
     st.session_state.agent = PDFAgent(api_key=api_key)
 
 if "messages" not in st.session_state:
