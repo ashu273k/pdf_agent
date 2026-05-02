@@ -1,0 +1,12 @@
+# INVALID / OUT-OF-SCOPE QUERIES
+# Expected behavior: agent says "not available in the provided document"
+# Agent must NEVER guess or use outside knowledge
+
+1. Who is the CEO of Scaler Academy?
+   → Expected refusal: Not mentioned anywhere in the document
+
+2. What is the best Python framework for building RAG systems?
+   → Expected refusal: General knowledge question, not in the document
+
+3. What date was the company STAIR Digital founded?
+   → Expected refusal: Document mentions the contact but not founding date

@@ -1,0 +1,17 @@
+# VALID QUERIES (expected: cited answer from the document)
+# These should all produce answers with [Page X] citations
+
+1. What is the main objective of Task 1?
+   → Expected: Answer about Narrative-to-Visual Story Agent, cited from pages 1-2
+
+2. How many marks is Task 3 worth?
+   → Expected: "10 Marks", cited from page 3
+
+3. What must the submission include for all tasks?
+   → Expected: Technical note, test instructions, demo video, deployed interface (optional), cited from page 1
+
+4. What are the evaluation criteria for Task 2?
+   → Expected: Source adherence, citation quality, handling conflicting info, cited from pages 2-3
+
+5. What bonus credit is available for all tasks?
+   → Expected: Multi-language support details, cited from page 4
