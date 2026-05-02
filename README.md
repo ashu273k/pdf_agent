@@ -1,63 +1,71 @@
+<!-- prettier-ignore -->
 # PDF-Constrained Conversational Agent
 
-A production-grade AI agent that answers questions strictly from an uploaded PDF — with page citations and clean refusals for out-of-scope queries.
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org)
+[![Streamlit](https://img.shields.io/badge/streamlit-%E2%9C%93-orange?logo=streamlit)](https://streamlit.io)
+[![Dependabot](https://img.shields.io/badge/dependencies-up--to--date-brightgreen)](https://github.com)
 
+>A compact, production-ready conversational agent that answers user questions strictly from an uploaded PDF — with explicit page citations and safe refusals for out-of-scope queries.
 
-## Architecture
+## Table of contents
 
-```
-User → Streamlit UI → Agent Core → Gemini 2.5 Flash
-                    ↓
-              PDF Extractor (tools/)
-              Citation Builder (tools/)
-              Conversation Memory (memory/)
-              Structured Logger (utils/)
-```
+- [Features](#features)
+- [Quickstart](#quickstart)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Development](#development)
+- [Contributing](#contributing)
 
-**Key design decisions:**
-- **No vector DB** — Gemini's 1M token context window fits entire PDFs directly. Simpler = more reliable.
-- **Tools pattern** — PDF extraction and citation parsing are isolated tools, not embedded in agent logic.
-- **Memory module** — Conversation history managed separately for clean multi-turn dialogue.
-- **Prompt-first refusal** — The system prompt strictly instructs the model to refuse out-of-scope queries, not post-process filter them.
+## Features
 
-## Setup
+- Answers drawn only from the uploaded PDF with inline page citations.
+- Clean, prompt-driven refusals to out-of-scope questions.
+- No external vector DB required — designed to use large context models.
+- Modular tools: PDF extraction, citation builder, and memory are separated for clarity.
+
+## Quickstart
+
+Clone, create a virtual environment, install deps, and run:
 
 ```bash
-# 1. Clone and enter the project
 git clone <your-repo>
-cd pdf-agent
-
-# 2. Create a virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-
-# 3. Install dependencies
+cd pdf_agent
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-
-# 4. Add your API key
-cp .env.example .env
-# Edit .env and paste your Gemini API key
-
-# 5. Run the app
 streamlit run app.py
 ```
 
+See [app.py](app.py) for the Streamlit entry point and [requirements.txt](requirements.txt) for dependencies.
+
+## Usage
+
+1. Open the app (Streamlit will print a local URL).
+2. Upload a PDF in the sidebar.
+3. Ask natural-language questions — answers include page citations like "[Page 4]".
+4. Try edge cases from [tests/invalid_queries.txt](tests/invalid_queries.txt) to confirm refusal behavior.
+
 ## Testing
 
-Use the sample queries in `tests/valid_queries.txt` and `tests/invalid_queries.txt`.
+- Sample valid/invalid queries: [tests/valid_queries.txt](tests/valid_queries.txt) and [tests/invalid_queries.txt](tests/invalid_queries.txt).
+- To run unit tests (if present):
 
-Upload any PDF via the sidebar, then test both valid and invalid queries to verify:
-- Valid queries return cited answers with [Page X] references
-- Invalid queries are refused cleanly
+```bash
+pytest -q
+```
 
-## Deployment (Streamlit Cloud)
+## Development
 
-1. Push this repo to GitHub (make sure `.env` is in `.gitignore`)
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your GitHub repo
-4. In **Secrets**, add: `GEMINI_API_KEY = "your_key_here"`
-5. Deploy — get a live URL to share with recruiters
+- Core agent logic: `agent/core.py`
+- Prompts: `agent/prompts.py`
+- Tools: `tools/pdf_extractor.py`, `tools/citation_builder.py`
+- Memory: `memory/conversation.py`
 
-## Bonus
+Use the `.venv` environment shown above for development flows.
 
-The agent supports non-English PDFs. Gemini 1.5 Flash handles multilingual documents natively. Queries in Hindi, French, or any supported language will be answered in the same language as the query.
+## Contributing
+
+Contributions are welcome. Open an issue or send a PR describing the change and any required environment variables.
+
+---
